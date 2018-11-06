@@ -1,0 +1,1 @@
+export { generateRandNumb } from "./number";
