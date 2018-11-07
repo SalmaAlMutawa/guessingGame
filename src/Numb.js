@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import WinPg from "./WinPg";
 
 class Numb extends Component {
   constructor(props) {
@@ -7,6 +8,7 @@ class Numb extends Component {
     this.state = {
       userNumber: "",
       randNumber: Math.floor(Math.random() * 100) + 1,
+      message: "",
       i: 5
     };
     this.handleChange = this.handleChange.bind(this);
@@ -17,16 +19,18 @@ class Numb extends Component {
     this.setState({ i: newi });
   }
   handleChange() {
-    let rem = 100 - this.state.randNumber;
+    this.decrementi();
+    let newMessage;
     if (this.state.userNumber === "") {
-      return "";
+      newMessage = "";
     } else if (this.state.userNumber == this.state.randNumber) {
-      return "You guessed it RIGHT!";
+      newMessage = <WinPg />;
     } else if (this.state.userNumber > this.state.randNumber) {
-      return "Your guess is too high!";
+      newMessage = "Your guess is too high!";
     } else if (this.state.userNumber < this.state.randNumber) {
-      return "Your guess is too low!";
+      newMessage = "Your guess is too low!";
     }
+    this.setState({ message: newMessage });
   }
   render() {
     console.log(`Random Numb: ${this.state.randNumber}`);
@@ -74,7 +78,7 @@ class Numb extends Component {
             <div className="col-lg-8" />
             <button
               className="btn btn-lg btn-outline-success btn-block"
-              onClick={this.decrementi}
+              onClick={() => this.handleChange()}
             >
               Guess
             </button>
@@ -87,7 +91,7 @@ class Numb extends Component {
                 fontFamily: "cursive"
               }}
             >
-              {this.handleChange()}
+              {this.state.message}
             </h4>
           </div>
         </div>
